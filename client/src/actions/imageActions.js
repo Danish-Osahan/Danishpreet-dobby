@@ -7,7 +7,8 @@ import {
   Image_List_Request,
 } from "../constants/imageConstants.js";
 import axios from "axios";
-const baseUrl = "http://localhost:8080";
+// const baseUrl = "http://localhost:8080";
+const baseUrl = "https://picpulse-server.onrender.com";
 
 export const listImages = () => async (dispatch, getState) => {
   try {

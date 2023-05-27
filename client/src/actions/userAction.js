@@ -8,7 +8,8 @@ import {
   User_Register_Request,
 } from "../constants/userConstants.js";
 import axios from "axios";
-const baseUrl = "http://localhost:8080";
+const baseUrl = "https://picpulse-server.onrender.com";
+// const baseUrl = "http://localhost:8080";
 
 export const login = ({email, password}) => async (dispatch) => {
   try {
