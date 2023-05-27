@@ -5,8 +5,8 @@ import { logout, mainlogo, create, loader } from "../assets";
 import { Logout } from "../actions/userAction";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
-import FileBase64 from "react-file-base64";
 import { ToastContainer, toast } from "react-toastify";
+import FileBase64 from "react-file-base64";
 import "react-toastify/dist/ReactToastify.css";
 import { createImage, listImages } from "../actions/imageActions.js";
 import ImageCard from "../components/ImageCard";
@@ -17,10 +17,24 @@ const Main = () => {
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (picture === "") {
+      toast.error("Please select a picture");
+      return false;
+    }
+    dispatch(createImage(title, picture));
+    toast.success("Image successfully uploaded");
+
+    onCloseModal();
+    
+  };
+  
+
   ////////////////////////////////////////////////////////////
   const { userInfo } = useSelector((state) => state.userLogin);
   const { images, error, loading } = useSelector((state) => state.imageList);
-  // const { success: successCreate } = useSelector((state) => state.imageCreate);
+  const { success } = useSelector((state) => state.imageCreate);
   // console.log(images);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,7 +43,7 @@ const Main = () => {
     if (!userInfo) {
       navigate("/signin");
     }
-  }, [userInfo, navigate, dispatch]);
+  }, [userInfo, navigate, dispatch,success]);
 
   const handleLogout = () => {
     dispatch(Logout());
@@ -43,27 +57,22 @@ const Main = () => {
   if (error) {
     toast.error(error);
   }
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (picture === "") {
-      toast.error("Please select a picture");
-      return false;
-    }
-    dispatch(createImage(title, picture));
-    window.location.reload();
-    toast.success("Image successfully uploaded");
 
-    onCloseModal();
-    // dispatch(listImages());
-  };
-
+  const handleClick = () => {
+      navigate("/createImage");
+    };
+ 
   ////////////////////////////////////////////////////////////////
   return (
     <>
       <ToastContainer />
       <header className="w-full  flex justify-center items-center flex-col mb-2 mt-4">
         <nav className="w-full items-center justify-between flex ">
-          <div data-aos="fade-right"   data-aos-duration="1000" className="justify-center items-center flex ">
+          <div
+            data-aos="fade-right"
+            data-aos-duration="1000"
+            className="justify-center items-center flex "
+          >
             <img src={mainlogo} alt="" className="w-16 object-contain" />
             <h3 className="font-satoshi sm:text-2xl xs:text-2xl md:text-3xl mt-1.5 lg:text-3xl font-extrabold blue_gradient ">
               PicPulse
@@ -102,8 +111,8 @@ const Main = () => {
           className="shadow-lg border rounded-full px-2  outline-none block w-full bg-gray-50 focus:outline-offset-[5px] outline-[#289ee5] outline-[2px] focus:bg-[#fff] "
         />
         <button
-        data-aos="fade-right"
-        data-aos-duration="1000"
+          data-aos="fade-right"
+          data-aos-duration="1000"
           className=" rounded-full shadow-xl translate-all bg-[#289ee5]  border-none  font-satoshi font-semibold text-xl  hover:bg-[#a3daf2] text-white hover:text-black p-2 "
           onClick={onOpenModal}
         >
@@ -139,7 +148,10 @@ const Main = () => {
           </div>
 
           <div className="w-full mt-3">
-            <button className="w-full button font-satoshi font-bold text-[22px]">
+            <button
+              type="submit"
+              className="w-full button font-satoshi font-bold text-[22px]"
+            >
               Upload
             </button>
           </div>
@@ -149,7 +161,7 @@ const Main = () => {
         className="flex 
       justify-center  items-center flex-wrap gap-4 mt-6 flex-row mb-6"
       >
-        {loading ? (
+        {loading? (
           <div className="w-full flex justify-center items-center ">
             <img src={loader} alt="Loader" className="w-20 object-contain" />
           </div>

@@ -36,7 +36,7 @@ export const imageCreateReducer = (state = {}, action) => {
     case Image_Creation_Success:
       return {
         loading: false,
-        succes: true,
+        success: true,
       };
 
     case Image_Creation_Fail:
