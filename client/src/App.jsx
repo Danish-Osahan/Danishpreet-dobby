@@ -6,7 +6,7 @@ import Home from "./Screens/Home";
 import Signin from "./Screens/Signin";
 import Signup from "./Screens/Signup";
 import Main from "./Screens/Main";
-import CreateImage from "./Screens/CreateImage";
+// import CreateImage from "./Screens/CreateImage";
 
 function App() {
 
@@ -25,7 +25,7 @@ function App() {
             <Route exact path="/signin" element={<Signin/>}/>
             <Route exact path="/signup" element={<Signup/>}/>
             <Route exact path="/main" element={<Main/>}/>
-            <Route exact path="/createImage" element={<CreateImage/>}/>
+            {/* <Route exact path="/createImage" element={<CreateImage/>}/> */}
           </Routes>
         </div>
         </BrowserRouter>
